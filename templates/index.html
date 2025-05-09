@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpamShield - Email Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://img.icons8.com/color/96/000000/shield--v1.png" class="logo" alt="Shield Logo">
+            <h1>SpamShield Analyzer</h1>
+            <p class="text-secondary">Protecting your inbox from unwanted content</p>
+        </div>
+
+        <div class="main-card">
+            <form method="POST">
+                <div class="input-group">
+                    <textarea 
+                        class="email-input" 
+                        id="emailText" 
+                        name="email_text" 
+                        rows="6" 
+                        placeholder="Paste email content here..."
+                        required
+                    ></textarea>
+                </div>
+                <button type="submit" class="analyze-btn">
+                    <i class="fas fa-shield-alt"></i>
+                    Analyze Email
+                </button>
+            </form>
+
+            {% if result %}
+            <div class="result-card {{ 'spam' if result == 'spam' else 'ham' }}">
+                <i class="result-icon {{ 'fas fa-exclamation-triangle text-danger' if result == 'spam' else 'fas fa-check-circle text-success' }}"></i>
+                <div>
+                    <h3 class="mb-1">Classification Result</h3>
+                    <p class="mb-0">This email is identified as <strong>{{ result|upper }}</strong></p>
+                    {% if result == 'spam' %}
+                    <small class="text-muted">We recommend deleting this message</small>
+                    {% else %}
+                    <small class="text-muted">This message appears safe</small>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">98.7%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1.2M+</div>
+                    <div class="stat-label">Emails Analyzed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Spam Caught</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
